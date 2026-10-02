@@ -1,0 +1,8 @@
+# Security headers for every path (Netlify / Cloudflare Pages _headers syntax). The CSP allows exactly the
+# inline scripts hashed below; see docs/DEPLOY.md before adding any.
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: default-src 'self'; img-src 'self' data:; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo='; frame-src https://www.google.com; connect-src 'self'; form-action 'self'; base-uri 'self'; frame-ancestors 'self'

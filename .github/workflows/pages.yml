@@ -1,0 +1,66 @@
+# Preview deploy: serves the committed, verified REFORGE build dist/ under https://carlcelinodspnza.github.io/<repo>/.
+# It does not rebuild the site. src/tools/preview.mjs copies dist/ to _site/, re-bases every root-relative
+# reference with site-reforge's sr-rebase (vendored in src/tools/site-reforge/) so the copy works under the
+# /<repo>/ subfolder, points the site search at the subfolder, rebuilds 404.html with base-absolute paths
+# (Pages serves it at any depth), and keeps the copy out of search engines: every page gets
+# <meta name="robots" content="noindex, nofollow"> (on a project site that meta is the control that works;
+# crawlers only read the host root's robots.txt). The preview is a redesign of a live practice site on
+# another domain, so it must never be indexed.
+name: Deploy preview to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths: ['dist/**', 'src/tools/**', '.github/workflows/pages.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Re-base dist/ for the /<repo>/ subfolder (noindex copy)
+        run: node src/tools/preview.mjs "/${{ github.event.repository.name }}" dist
+      - name: Check the copy is noindex
+        run: |
+          total=$(find _site -name '*.html' | wc -l)
+          noindex=$(grep -rl 'content="noindex, nofollow"' _site --include=*.html | wc -l)
+          echo "pages: $total  noindex: $noindex"
+          test "$total" -eq 168 && test "$total" -eq "$noindex"
+      - name: Check no root-relative asset or page reference survived the re-base
+        # base-absolute references (/<repo>/…) are intended: 404.html is served at any depth, so it keeps them
+        run: |
+          left=$(grep -rhoE "(href|src|content|action|poster|srcset|data-src)=[\"']/[^/\"'][^\"']*[\"']" _site --include=*.html | grep -v "=[\"']/${{ github.event.repository.name }}/" | wc -l)
+          echo "root-relative references left: $left"
+          test "$left" -eq 0
+      - name: Check the site search points at the subfolder
+        run: |
+          base="/${{ github.event.repository.name }}/"
+          grep -q "data-search-index=\"${base}search-index.json\"" _site/search/index.html
+          node -e 'const j=require("./_site/search-index.json");const b=process.argv[1];const bad=j.filter(e=>!e.url.startsWith(b));console.log("search urls:",j.length,"outside base:",bad.length);process.exit(bad.length?1:0)' "$base"
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

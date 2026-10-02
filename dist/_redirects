@@ -1,0 +1,34 @@
+# Permanent redirects (Netlify / Cloudflare Pages _redirects syntax): 16 moved URLs, each written
+# without and with its trailing slash. Nginx and Apache equivalents: docs/DEPLOY.md.
+/dry-eye-treatment                                         /eye-care-services/dry-eye-treatment/  301
+/dry-eye-treatment/                                        /eye-care-services/dry-eye-treatment/  301
+/glaucoma-treatment                                        /eye-care-services/glaucoma-treatment/  301
+/glaucoma-treatment/                                       /eye-care-services/glaucoma-treatment/  301
+/your-eye-health/eye-conditions                            /eye-conditions-2/  301
+/your-eye-health/eye-conditions/                           /eye-conditions-2/  301
+/eyeglasses-contacts/eyeglasses                            /eyeglasses-contacts/  301
+/eyeglasses-contacts/eyeglasses/                           /eyeglasses-contacts/  301
+/contact-lenses                                            /eyeglasses-contacts/contact-lenses-2/  301
+/contact-lenses/                                           /eyeglasses-contacts/contact-lenses-2/  301
+/eye-glasses                                               /eyeglasses-contacts/eye-glasses/  301
+/eye-glasses/                                              /eyeglasses-contacts/eye-glasses/  301
+/eye-care-services/eye-exams                               /your-eye-health/eye-exams/  301
+/eye-care-services/eye-exams/                              /your-eye-health/eye-exams/  301
+/about-us                                                  /our-eye-care-clinic/  301
+/about-us/                                                 /our-eye-care-clinic/  301
+/author/missionvisionsanantonio                            /whats-new/  301
+/author/missionvisionsanantonio/                           /whats-new/  301
+/category/blog                                             /blog/  301
+/category/blog/                                            /blog/  301
+/category/our-doctors                                      /the-staff-2/  301
+/category/our-doctors/                                     /the-staff-2/  301
+/category/our-staff                                        /the-staff/  301
+/category/our-staff/                                       /the-staff/  301
+/category/uncategorized                                    /whats-new/  301
+/category/uncategorized/                                   /whats-new/  301
+/tag/all-about-vision                                      /your-eye-health/  301
+/tag/all-about-vision/                                     /your-eye-health/  301
+/your-eye-health/childrens-vision/childrens-vision-video   /your-eye-health/childrens-vision/  301
+/your-eye-health/childrens-vision/childrens-vision-video/  /your-eye-health/childrens-vision/  301
+/your-eye-health/eye-diseases/cataracts/cataracts-video    /your-eye-health/eye-diseases/cataracts/  301
+/your-eye-health/eye-diseases/cataracts/cataracts-video/   /your-eye-health/eye-diseases/cataracts/  301

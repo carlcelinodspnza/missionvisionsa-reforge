@@ -1,0 +1,7 @@
+# the preview is built in CI by src/tools/preview.mjs (.github/workflows/pages.yml)
+_site/
+.DS_Store
+Thumbs.db
+node_modules/
+# guard: a failed path expansion in a tool must never write into a published repo
+undefined/
